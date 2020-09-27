@@ -2,7 +2,7 @@
 
 ![Build](https://github.com/dmachard/unbound-remotecontrol/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/unbound-remotecontrol/workflows/Testing/badge.svg) ![Unbound](https://byob.yarr.is/dmachard/unbound-remotecontrol/unbound) ![Python](https://byob.yarr.is/dmachard/unbound-remotecontrol/python)
 
-![License](https://badgen.net/badge/License/MIT/yellow?icon=github) ![Pypi](https://github.com/dmachard/unbound_remotecontrol/workflows/PyPI/badge.svg)
+![License](https://badgen.net/badge/License/MIT/yellow?icon=github) ![Pypi](https://github.com/dmachard/unbound-remotecontrol/workflows/PyPI/badge.svg)
 
 ## Table of contents
 * [Installation](#installation)
