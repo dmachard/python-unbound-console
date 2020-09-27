@@ -1,8 +1,8 @@
 # Python remote control for unbound server
 
-![License: MIT](https://badgen.net/badge/License/MIT/yellow?icon=github) ![Publish](https://github.com/dmachard/unbound_remotecontrol/workflows/Publish%20to%20PyPI/badge.svg)
+![Build](https://github.com/dmachard/unbound-remotecontrol/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/unbound-remotecontrol/workflows/Testing/badge.svg) ![Unbound](https://byob.yarr.is/dmachard/unbound-remotecontrol/unbound) ![Python](https://byob.yarr.is/dmachard/unbound-remotecontrol/python)
 
-![Testing](https://github.com/dmachard/unbound-remotecontrol/workflows/Testing/badge.svg) ![Unbound](https://byob.yarr.is/dmachard/unbound-remotecontrol/unbound) ![Python](https://byob.yarr.is/dmachard/unbound-remotecontrol/python)
+![License](https://badgen.net/badge/License/MIT/yellow?icon=github) ![Pypi](https://github.com/dmachard/unbound_remotecontrol/workflows/PyPI/badge.svg)
 
 ## Table of contents
 * [Installation](#installation)
@@ -29,7 +29,7 @@ You can execute commands with the function `send_command`. See [nlnetlabs docume
 - Import the module in your code
 
 ```python
-from unbound_control import RemoteControl
+from unbound_remotecontrol import RemoteControl
 ```
 
 - Configure the remote control client
