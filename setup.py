@@ -20,7 +20,7 @@ setuptools.setup(
     description="Python remote control for unbound",
     long_description=LONG_DESCRIPTION,
     long_description_content_type="text/markdown",
-    url="https://github.com/dmachard/unbound_remotecontrol",
+    url="https://github.com/dmachard/unbound-remotecontrol",
     packages=['unbound_remotecontrol', 'tests'],
     include_package_data=True,
     platforms='any',
