@@ -47,7 +47,7 @@ class RemoteControl:
         # connect to the server
         self.sock.connect((self.rc_host, self.rc_port))
         
-    def send_command(self, cmd):
+    def send_command(self, cmd, data_list=""):
         """send command return output"""
         # connect to the remote server
         self.connect_to()
@@ -55,11 +55,21 @@ class RemoteControl:
         # send the command
         self.sock.send(b"UBCT%s %s\n" % (UC_VERSION, cmd.encode()))
         
+        if cmd.encode() in [ b"local_zones", b"local_zones_remove",
+                             b"local_datas", b"view_local_datas",
+                             b"local_datas_remove", b"view_local_datas_remove",
+                             b"load_cache" ]:
+            for line in data_list:
+                self.sock.send( b"%s\n" % line.encode() )
+            
+            if cmd.encode() != b"load_cache":
+                self.sock.send( b"\x04\x0a" )
+            
         # wait to receive all data
         buf = b''
         recv = True
         while recv:
-            data = self.sock.recv(5)
+            data = self.sock.recv(1024)
             buf += data
             if not data:
                 recv = False
