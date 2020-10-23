@@ -1,4 +1,4 @@
-from unbound_remotecontrol import RemoteControl
+from unbound_console import RemoteControl
 import unittest
 
 class TestConnect(unittest.TestCase):
