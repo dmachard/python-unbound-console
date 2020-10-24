@@ -11,10 +11,10 @@
 
 ## Installation
 
-This module can be installed from [pypi](https://pypi.org/project/unbound_remotecontrol/) website
+This module can be installed from [pypi](https://pypi.org/project/unbound_console/) website
 
 ```python
-pip install unbound_remotecontrol
+pip install unbound_console
 ```
 
 ## Remote Control on Unbound
@@ -29,7 +29,7 @@ You can execute commands with the function `send_command`. See [nlnetlabs docume
 - Import the module in your code
 
 ```python
-from unbound_remotecontrol import RemoteControl
+from unbound_console import RemoteControl
 ```
 
 - Configure the remote control client
