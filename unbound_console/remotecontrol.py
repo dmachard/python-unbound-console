@@ -93,18 +93,14 @@ class RemoteControl:
         zone = y.get("zone", {})
         zone_name = zone.get("name", None)
         zone_type = zone.get("type", "static")
-        resource_records = zone.get("resource-records", [])
-        pointer_records = zone.get("pointer-records", [])          
-        
+        zone_records = zone.get("records", [])
+
         if zone_name is None:
             raise Exception("name zone not provided")
             
         o = self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
         
-        for record in resource_records:  
+        for record in records:  
             o = self.send_command(cmd="local_data %s" % record)
-            
-        for record in pointer_records:  
-            o = self.send_command(cmd="local_data_ptr %s" % record)
-            
+
         return o

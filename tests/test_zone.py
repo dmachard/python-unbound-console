@@ -13,9 +13,8 @@ class TestZone(unittest.TestCase):
 zone:
   name: test.
   type: static
-  resource-records:
+  records:
     - "router.test. 86400 IN A 192.168.0.1"
-  pointer-records:
     - "192.168.0.1  86400 router.test."
 """
 
