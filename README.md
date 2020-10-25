@@ -59,6 +59,7 @@ zone:
   type: static
   records:
     - "router.home. 86400 IN A 192.168.0.1"
+    - "192.168.0.1 86400 IN PTR router.test."
 ```
 
 Call `load_zone` with the yaml file to load-it in your unbound server.

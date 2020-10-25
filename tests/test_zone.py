@@ -24,8 +24,11 @@ zone:
 """
 
         o = rc.load_zone(data_yaml=zone_yaml)
+        
+        r = my_resolver.resolve('router.test', 'a')
+        print(r)
+        
         self.assertRegex(o, "ok")
         
-        r = my_resolver.resolve('router.test.', 'a')
-        print(o)
+        
         
