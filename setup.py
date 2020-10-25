@@ -31,5 +31,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries",
     ],
-    install_requires=[]
+    install_requires=[
+        "pyyaml"
+    ]
 )

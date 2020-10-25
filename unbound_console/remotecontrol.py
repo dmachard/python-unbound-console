@@ -1,6 +1,7 @@
 
 import socket
 import ssl
+import yaml
 
 UC_PORT = 8953
 UC_VERSION = b"1"
@@ -83,3 +84,27 @@ class RemoteControl:
         for l in buf.splitlines():
             o.append(l.decode("utf-8"))
         return "\n".join(o)
+
+    def load_zone(self, data_yaml):
+        """add local zone"""
+        
+        y = yaml.load(data_yaml)
+
+        zone = y.get("zone", {})
+        zone_name = zone.get("name", None)
+        zone_type = zone.get("type", "static")
+        resource_records = zone.get("resource-records", [])
+        pointer_records = zone.get("pointer-records", [])          
+        
+        if zone_name is None:
+            raise Exception("name zone not provided")
+            
+        o = self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
+        
+        for record in resource_records:  
+            o = self.send_command(cmd="local_data %s" % record)
+            
+        for record in pointer_records:  
+            o = self.send_command(cmd="local_data_ptr %s" % record)
+            
+        return o

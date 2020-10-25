@@ -1,4 +1,4 @@
-# Python remote control for unbound server
+# Python console for unbound server
 
 ![Build](https://github.com/dmachard/unbound-remotecontrol/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/unbound-remotecontrol/workflows/Testing/badge.svg) ![Unbound](https://byob.yarr.is/dmachard/unbound-remotecontrol/unbound) ![Python](https://byob.yarr.is/dmachard/unbound-remotecontrol/python)
 
@@ -8,6 +8,7 @@
 * [Installation](#installation)
 * [Remote Control on Unbound](#remote-control-on-unbound)
 * [Execute command](#execute-command)
+* [Add zone from YAML file](#add-zone-from-yaml-file)
 
 ## Installation
 
@@ -45,5 +46,27 @@ rc = RemoteControl(host="127.0.0.1", port=8953,
 
 ```python
 o = rc.send_command(cmd="status")
+print(o)
+```
+
+### Add zone from YAML file
+
+YAML zone definition example:
+
+```
+zone:
+  name: home.
+  type: static
+  resource-records:
+    - "router.home. 86400 IN A 192.168.0.1"
+  pointer-records:
+    - "192.168.0.1  86400 router.home."
+```
+
+Call `load_zone` with the yaml file to load-it in your unbound server.
+
+```python
+zone_fd = file('myzone.yml', 'r')
+o = rc.load_zone(data_yaml=zone_fd)
 print(o)
 ```
