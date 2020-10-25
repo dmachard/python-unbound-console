@@ -15,7 +15,7 @@ zone:
   type: static
   records:
     - "router.test. 86400 IN A 192.168.0.1"
-    - "192.168.0.1  86400 router.test."
+    - "192.168.0.1 86400 IN PTR router.test."
 """
 
         o = rc.load_zone(data_yaml=zone_yaml)
