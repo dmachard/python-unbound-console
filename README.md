@@ -8,7 +8,8 @@
 * [Installation](#installation)
 * [Remote Control on Unbound](#remote-control-on-unbound)
 * [Execute command](#execute-command)
-* [Add zone from YAML file](#add-zone-from-yaml-file)
+* [Loading zone from YAML file](#loading-zone-from-yaml-file)
+* [Execute bulk command](#execute-bulk-command)
 
 ## Installation
 
@@ -49,7 +50,7 @@ o = rc.send_command(cmd="status")
 print(o)
 ```
 
-### Add zone from YAML file
+### Loading zone from YAML file
 
 YAML zone definition example:
 
@@ -65,7 +66,16 @@ zone:
 Call `load_zone` with the yaml file to load-it in your unbound server.
 
 ```python
-zone_fd = file('myzone.yml', 'r')
-o = rc.load_zone(data_yaml=zone_fd)
+o = rc.load_zone(data_yaml='<yaml content>')
+print(o)
+```
+
+### Execute bulk command
+
+```python
+domains_bulk = []
+domains_bulk.append( "www.google.com always_nxdomain")
+
+o = rc.send_command(cmd="local_zones", data_list=domains_bulk)
 print(o)
 ```
