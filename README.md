@@ -57,10 +57,8 @@ YAML zone definition example:
 zone:
   name: home.
   type: static
-  resource-records:
+  records:
     - "router.home. 86400 IN A 192.168.0.1"
-  pointer-records:
-    - "192.168.0.1  86400 router.home."
 ```
 
 Call `load_zone` with the yaml file to load-it in your unbound server.
