@@ -26,9 +26,8 @@ zone:
         o = rc.load_zone(data_yaml=zone_yaml)
         
         r = my_resolver.resolve('router.test', 'a')
-        print(r.response)
-        
-        self.assertRegex(o, "ok")
+
+        self.assertRegex(r.response, ".*192.168.0.1.*")
         
         
         
