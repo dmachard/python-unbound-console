@@ -100,7 +100,7 @@ class RemoteControl:
             
         o = self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
         
-        for record in records:  
+        for record in zone_records:  
             o = self.send_command(cmd="local_data %s" % record)
 
         return o
