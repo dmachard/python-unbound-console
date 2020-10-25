@@ -27,7 +27,7 @@ zone:
         
         r = my_resolver.resolve('router.test', 'a')
 
-        self.assertRegex(r.response, ".*192.168.0.1.*")
+        self.assertRegex(str(r.response), ".*192.168.0.1.*")
         
         
         
