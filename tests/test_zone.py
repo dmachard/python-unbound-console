@@ -1,9 +1,14 @@
 from unbound_console import RemoteControl
+
 import unittest
+import dns.resolver
+
+my_resolver = dns.resolver.Resolver(configure=False)
+my_resolver.nameservers = ['127.0.0.1']
 
 class TestZone(unittest.TestCase):
-    def test1_add_zone(self):
-        """add zone"""             
+    def test1_load_zone(self):
+        """load zone"""             
         rc = RemoteControl(host="127.0.0.1", port=8953,
                            server_cert = "/etc/unbound/unbound_server.pem", 
                            client_cert= "/etc/unbound/unbound_control.pem",
@@ -20,3 +25,7 @@ zone:
 
         o = rc.load_zone(data_yaml=zone_yaml)
         self.assertRegex(o, "ok")
+        
+        r = my_resolver.resolve('router.test.', 'a')
+        print(o)
+        

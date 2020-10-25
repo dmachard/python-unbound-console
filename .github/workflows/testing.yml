@@ -18,6 +18,7 @@ jobs:
       run: |
         sudo apt-get install -y unbound net-tools
         sudo python3 -m pip install pyyaml
+        sudo python3 -m pip install --upgrade dnspython
         sudo systemctl stop unbound
     - id: unbound_version
       run: echo "##[set-output name=data;]$(unbound -V | sed -n 's/^[V|v]ersion //p')"

@@ -88,7 +88,7 @@ class RemoteControl:
     def load_zone(self, data_yaml):
         """add local zone"""
         
-        y = yaml.load(data_yaml)
+        y = yaml.safe_load(data_yaml)
 
         zone = y.get("zone", {})
         zone_name = zone.get("name", None)
