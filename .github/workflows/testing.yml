@@ -4,26 +4,30 @@ on:
   push:
     branches:
       - master
+  pull_request:
+    branches:
+      - master
 
 jobs:
   release:
     runs-on: ubuntu-20.04
     steps:
-    - uses: actions/checkout@v1
-    - name: Setup Python
-      uses: actions/setup-python@v1
-      with:
-        python-version: "3.7"
+    - uses: actions/checkout@v2
+    - uses: actions/setup-python@v2
+
     - name: Install packages
       run: |
         sudo apt-get install -y unbound net-tools
         sudo python3 -m pip install pyyaml
         sudo python3 -m pip install --upgrade dnspython
         sudo systemctl stop unbound
+
     - id: unbound_version
       run: echo "##[set-output name=data;]$(unbound -V | sed -n 's/^[V|v]ersion //p')"
+
     - id: python_version
       run: echo "##[set-output name=data;]$(python3 --version | sed -n 's/^[P|y]ython //p')"
+
     - name: Unbound badge
       uses: RubbaBoy/BYOB@v1.1.0
       with:
@@ -32,6 +36,7 @@ jobs:
         STATUS: ${{ steps.unbound_version.outputs.data }}
         COLOR: 027CB9
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Python badge
       uses: RubbaBoy/BYOB@v1.1.0
       with:
@@ -40,6 +45,7 @@ jobs:
         STATUS: ${{ steps.python_version.outputs.data }}
         COLOR: 027CB9
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - name: Reconfigure unbound to enable remote control
       run: |
         sudo cp -rf tests/unbound_remotecontrol.conf /etc/unbound/unbound.conf.d/
@@ -47,9 +53,11 @@ jobs:
         sudo systemctl status unbound
         sudo netstat -anp | grep unbound
         sudo unbound-control status
+
     - name: Run Python tests
       run: |
         sudo python3 -m unittest tests.test_connect
+
     - name: Reconfigure unbound with TLS
       run: |
         sudo systemctl stop unbound
@@ -60,9 +68,11 @@ jobs:
         sudo systemctl status unbound
         sudo netstat -anp | grep unbound
         sudo unbound-control status
+
     - name: Run Python tests in TLS mode
       run: |
         sudo python3 -m unittest tests.test_tls_connect
+        
     - name: Run Python other tests
       run: |
         sudo python3 -m unittest tests.test_zone
