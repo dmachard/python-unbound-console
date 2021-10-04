@@ -5,7 +5,7 @@ import dns.resolver
 
 my_resolver = dns.resolver.Resolver(configure=False)
 my_resolver.nameservers = [ '127.0.0.1' ]
-my_resolver.port = 5353
+my_resolver.port = 5300
 
 class TestZone(unittest.TestCase):
     def test1_load_zone(self):
@@ -26,7 +26,7 @@ zone:
 
         o = rc.load_zone(data_yaml=zone_yaml)
         print(o)
-        
+
         r = my_resolver.resolve('router.test', 'a')
 
         self.assertRegex(str(r.response), ".*192.168.0.1.*")
