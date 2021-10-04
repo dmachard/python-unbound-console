@@ -18,33 +18,9 @@ jobs:
     - name: Install packages
       run: |
         sudo apt-get install -y unbound net-tools
-        sudo python3 -m pip install pyyaml
+        sudo python3 -m pip install -r requirements.txt
         sudo python3 -m pip install --upgrade dnspython
         sudo systemctl stop unbound
-
-    - id: unbound_version
-      run: echo "##[set-output name=data;]$(unbound -V | sed -n 's/^[V|v]ersion //p')"
-
-    - id: python_version
-      run: echo "##[set-output name=data;]$(python3 --version | sed -n 's/^[P|y]ython //p')"
-
-    - name: Unbound badge
-      uses: RubbaBoy/BYOB@v1.1.0
-      with:
-        NAME: unbound
-        LABEL: 'Unbound'
-        STATUS: ${{ steps.unbound_version.outputs.data }}
-        COLOR: 027CB9
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
-    - name: Python badge
-      uses: RubbaBoy/BYOB@v1.1.0
-      with:
-        NAME: python
-        LABEL: 'Python'
-        STATUS: ${{ steps.python_version.outputs.data }}
-        COLOR: 027CB9
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Reconfigure unbound to enable remote control
       run: |
