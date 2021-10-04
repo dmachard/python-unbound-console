@@ -30,7 +30,7 @@ jobs:
     - name: Deploy unbound with secure remote control 
       run: |
         sudo docker run --name unbound02 -d --net=host -v $(pwd)/testsdata/unbound_tls.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
-        sudo docker exec -it unbound02  /opt/unbound/sbin/unbound-control-setup
+        sudo docker exec unbound02  /opt/unbound/sbin/unbound-control-setup
         sudo docker cp unbound02:/opt/unbound/etc/unbound/unbound_control.pem /tmp/unbound_control.pem
         sudo docker cp unbound02:/opt/unbound/etc/unbound/unbound_control.key /tmp/unbound_control.key
         sudo docker cp unbound02:/opt/unbound/etc/unbound/unbound_server.pem /tmp/unbound_server.pem
