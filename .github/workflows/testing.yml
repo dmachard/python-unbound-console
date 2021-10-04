@@ -11,15 +11,22 @@ on:
 jobs:
   unbound:
     runs-on: ubuntu-20.04
+
+    strategy:
+      matrix:
+        unbound: [ '1.12.0', '1.13.2' ]
+        python: [ '3.8', '3.9']
+
+
     steps:
     - uses: actions/checkout@v2
     - uses: actions/setup-python@v2
       with:
-        python-version: "3.8"
+        python-version: ${{ matrix.python }}
 
     - name: Deploy dnsdist docker image
       run: |
-        sudo docker run --name unbound -d --net=host -v $(pwd)/testsdata/unbound.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:1.13.2
+        sudo docker run --name unbound -d --net=host -v $(pwd)/testsdata/unbound.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
 
     - name: Run Python tests 
       run: |
