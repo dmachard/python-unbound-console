@@ -6,4 +6,5 @@ class TestConnect(unittest.TestCase):
         """connect and get status"""             
         rc = RemoteControl(host="127.0.0.1", port=8953)
         o = rc.send_command(cmd="status")
+        print(o)
         self.assertRegex(o, ".*is running.*")

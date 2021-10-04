@@ -25,6 +25,7 @@ zone:
 """
 
         o = rc.load_zone(data_yaml=zone_yaml)
+        print(o)
         
         r = my_resolver.resolve('router.test', 'a')
 

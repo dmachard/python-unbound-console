@@ -9,4 +9,5 @@ class TestConnect(unittest.TestCase):
                            client_cert= "/tmp/unbound_control.pem",
                            client_key= "/tmp/unbound_control.key")
         o = rc.send_command(cmd="status")
+        print(o)
         self.assertRegex(o, ".*is running.*")
