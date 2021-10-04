@@ -5,12 +5,12 @@ import dns.resolver
 
 my_resolver = dns.resolver.Resolver(configure=False)
 my_resolver.nameservers = [ '127.0.0.1' ]
-my_resolver.port = 5302
+my_resolver.port = 5353
 
 class TestZone(unittest.TestCase):
     def test1_load_zone(self):
         """load zone"""             
-        rc = RemoteControl(host="127.0.0.1", port=8952,
+        rc = RemoteControl(host="127.0.0.1", port=8953,
                            server_cert = "/tmp/unbound_server.pem", 
                            client_cert= "/tmp/unbound_control.pem",
                            client_key= "/tmp/unbound_control.key")
