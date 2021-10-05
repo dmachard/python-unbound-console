@@ -37,8 +37,7 @@ You can execute commands with the function `send_command`. See [nlnetlabs docume
 from unbound_console import RemoteControl
 ```
 
-- Configure the remote control client with tls support.
-You can provide a unix local socket with `unix_sock="/var/run/unbound-console.sock`
+- Configure the remote control client with tls support. You can also provide a unix socket `unix_sock="/var/run/unbound-console.sock`.
 
 ```python
 rc = RemoteControl(host="127.0.0.1", port=8953,
