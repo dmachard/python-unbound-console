@@ -35,6 +35,9 @@ jobs:
         sudo docker logs unbound01
         sudo netstat -anp | grep 8953
 
+    - run: sudo docker logs unbound01
+      if: always()
+
     - name: Run Python tests
       run: |
         sudo python3 -m unittest tests.test_connect
