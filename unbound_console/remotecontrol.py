@@ -8,11 +8,12 @@ UC_VERSION = b"1"
 
 class RemoteControl:
     def __init__(self, host="127.0.0.1", port=UC_PORT, server_cert = None, 
-                       client_cert=None, client_key=None):
+                       client_cert=None, client_key=None, unix_sock=None):
         """remote control class"""
         self.rc_host = host
         self.rc_port = port
-        
+        self.rc_unix = unix_sock
+
         self.sock = None
         self.sock_timeout = 1.0
         
@@ -35,7 +36,13 @@ class RemoteControl:
         
     def connect_to(self):
         """connect to remote control"""
-        # prepare a tcp socket
+        # prepare unix socket
+        if self.rc_unix != None:
+            self.sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
+            self.sock.connect(self.rc_unix)
+            return
+
+        # prepare tcp socket
         self.sock = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         self.sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         self.sock.settimeout(self.sock_timeout)

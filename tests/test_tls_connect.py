@@ -1,7 +1,7 @@
 from unbound_console import RemoteControl
 import unittest
 
-class TestConnect(unittest.TestCase):
+class TestTlsConnect(unittest.TestCase):
     def test_status(self):
         """connect and get status"""             
         rc = RemoteControl(host="127.0.0.1", port=8953,
