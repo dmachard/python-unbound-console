@@ -31,10 +31,9 @@ jobs:
     - name: Deploy unbound with insecure remote control 
       run: |
         sudo docker run --name unbound01 --no-healthcheck -d --net=host -v $(pwd)/testsdata/unbound.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
-        sudo docker logs unbound01
         sudo netstat -anp | grep 8953
 
-    - name: Run Python tests for insecure remote control
+    - name: Run Python tests
       run: |
         sudo python3 -m unittest tests.test_connect
 
