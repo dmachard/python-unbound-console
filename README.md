@@ -2,6 +2,11 @@
 
 ![Build](https://github.com/dmachard/unbound-remotecontrol/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/unbound-remotecontrol/workflows/Testing/badge.svg) ![Pypi](https://github.com/dmachard/unbound-remotecontrol/workflows/PyPI/badge.svg)
 
+
+![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green) ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) 
+![python 3.8.x](https://img.shields.io/badge/python%203.8.x-tested-green) ![python 3.9.x](https://img.shields.io/badge/python%203.9.x-tested-green) 
+
+
 ## Table of contents
 * [Installation](#installation)
 * [Remote Control on Unbound](#remote-control-on-unbound)
