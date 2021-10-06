@@ -1,11 +1,12 @@
-name: PyPI
+name: Publish
 
 on:
   release:
     types: [published]
 
 jobs:
-  release:
+  
+  pypi:
     runs-on: ubuntu-20.04
     steps:
     - uses: actions/checkout@v2
