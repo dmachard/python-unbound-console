@@ -49,18 +49,16 @@ jobs:
         sudo docker stop unbound01
         sudo cp -rf $(pwd)/testsdata/unbound_tls.conf $(pwd)/testsdata/unbound.conf
         sudo docker start unbound01
+        while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound01); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
     - name: Run Python tests 
       run: |
         sudo python3 -m unittest tests.test_tls_connect
         sudo python3 -m unittest tests.test_zone
 
-    - name: add unbound user
-      run: |
-        sudo mkdir /tmp/unbound
-
     - name: Deploy unbound with UNIX remote control
       run: |
+        sudo mkdir /tmp/unbound
         sudo docker run --user root --name unbound02 --health-cmd='drill @127.0.0.1 -p 5300 github.com  || exit 1' --health-interval=2s -d --net=host -v /tmp/unbound/:/tmp/unbound/ -v $(pwd)/testsdata/unbound_unix.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
         while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound02); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
