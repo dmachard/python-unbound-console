@@ -36,7 +36,7 @@ jobs:
     - run: sudo docker logs unbound01
       if: always()
 
-    - name: Run Python tests
+    - name: Run Python tests for tcp
       run: |
         sudo python3 -m unittest tests.test_connect
 
@@ -51,7 +51,7 @@ jobs:
         sudo docker start unbound01
         while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound01); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
-    - name: Run Python tests 
+    - name: Run Python tests for tls
       run: |
         sudo python3 -m unittest tests.test_tls_connect
         sudo python3 -m unittest tests.test_zone
@@ -63,6 +63,6 @@ jobs:
         sudo docker run --name unbound02 --health-cmd='drill @127.0.0.1 -p 5300 github.com  || exit 1' --health-interval=2s -d --net=host -v /tmp/unbound/:/tmp/unbound/ -v $(pwd)/testsdata/unbound_unix.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
         while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound02); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
-    - name: Run Python tests 
+    - name: Run Python tests for unix socket
       run: |
         sudo python3 -m unittest tests.test_unix_connect
