@@ -58,11 +58,8 @@ jobs:
 
     - name: add unbound user
       run: |
-        sudo cat /etc/passwd
-        sudo addgroup --system --gid 1000 unbound
-        sudo adduser --system --disabled-password --no-create-home -uid 1000 --gid 1000 unbound
         sudo mkdir /tmp/unbound
-        sudo chown -R unbound:unbound /tmp/unbound/
+        sudo chown -R runneradmin:runneradmin /tmp/unbound/
 
     - name: Deploy unbound with UNIX remote control
       run: |
