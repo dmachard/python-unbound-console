@@ -56,8 +56,9 @@ jobs:
         sudo python3 -m unittest tests.test_tls_connect
         sudo python3 -m unittest tests.test_zone
 
-    - name: add _unbound user
+    - name: add unbound user
       run: |
+        sudo cat /etc/passwd
         sudo addgroup --system --gid 1000 unbound
         sudo adduser --system --disabled-password --no-create-home -uid 1000 --gid 1000 unbound
         sudo mkdir /tmp/unbound
