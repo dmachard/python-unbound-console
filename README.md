@@ -5,7 +5,7 @@
 
 ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
 
-![python 3.8.x](https://img.shields.io/badge/python%203.8.x-tested-blue) ![python 3.9.x](https://img.shields.io/badge/python%203.9.x-tested-blue) 
+![python 3.8.x](https://img.shields.io/badge/python%203.8.x-tested-blue) ![python 3.9.x](https://img.shields.io/badge/python%203.9.x-tested-blue) ![python 3.10.x](https://img.shields.io/badge/python%203.10.x-tested-blue) 
 
 
 ## Table of contents
