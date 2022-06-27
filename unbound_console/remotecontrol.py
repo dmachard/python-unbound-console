@@ -1,4 +1,5 @@
 
+import asyncio
 import socket
 import ssl
 import yaml
@@ -111,3 +112,54 @@ class RemoteControl:
             o = self.send_command(cmd="local_data %s" % record)
 
         return o
+
+
+class RemoteControlAsync(RemoteControl):
+    async def connect_to(self):
+        """
+        connect to remote control and return the stream reader/writer
+        """
+        if self.rc_unix != None:
+            return await asyncio.open_unix_connection(
+                self.rc_unix,
+                ssl=self.setup_ssl_ctx(),
+            )
+
+        return await asyncio.open_connection(
+            self.rc_host,
+            self.rc_port,
+            ssl=self.setup_ssl_ctx(),
+        )
+
+    async def send_command(self, cmd, data_list=""):
+        """
+        send a command to remote control and return output
+        """
+        reader, writer = await self.connect_to()
+
+        writer.write(b"UBCT%s %s\n" % (UC_VERSION, cmd.encode()))
+        await writer.drain()
+
+        if cmd.encode() in [ b"local_zones", b"local_zones_remove",
+                             b"local_datas", b"view_local_datas",
+                             b"local_datas_remove", b"view_local_datas_remove",
+                             b"load_cache" ]:
+            for line in data_list:
+                writer.write( b"%s\n" % line.encode() )
+                await writer.drain()
+
+            if cmd.encode() != b"load_cache":
+                writer.write( b"\x04\x0a" )
+                await writer.drain()
+
+        lines = []
+
+        # read all lines until EOF
+        async for line in reader:
+            lines.append(line.decode("utf-8").rstrip("\n"))
+
+        # close the writer
+        writer.close()
+        await writer.wait_closed()
+
+        return "\n".join(lines)

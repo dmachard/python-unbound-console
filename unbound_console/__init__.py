@@ -1,1 +1,1 @@
-from unbound_console.remotecontrol import RemoteControl
+from unbound_console.remotecontrol import RemoteControl, RemoteControlAsync
