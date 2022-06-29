@@ -163,3 +163,23 @@ class RemoteControlAsync(RemoteControl):
         await writer.wait_closed()
 
         return "\n".join(lines)
+
+    async def load_zone(self, data_yaml):
+        """add local zone"""
+
+        y = yaml.safe_load(data_yaml)
+
+        zone = y.get("zone", {})
+        zone_name = zone.get("name", None)
+        zone_type = zone.get("type", "static")
+        zone_records = zone.get("records", [])
+
+        if zone_name is None:
+            raise Exception("name zone not provided")
+
+        o = await self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
+
+        for record in zone_records:
+            o = await self.send_command(cmd="local_data %s" % record)
+
+        return o
