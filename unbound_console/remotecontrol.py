@@ -84,7 +84,7 @@ class RemoteControl(RemoteControlBase):
         """connect and return a remote control socket"""
         sock = None
         # prepare unix socket
-        if self.rc_unix != None:
+        if self.rc_unix is not None:
             sock = socket.socket(socket.AF_UNIX, socket.SOCK_STREAM)
             sock.connect(self.rc_unix)
             return sock
@@ -152,7 +152,7 @@ class RemoteControlAsync(RemoteControlBase):
         """
         connect to remote control and return the stream reader/writer
         """
-        if self.rc_unix != None:
+        if self.rc_unix is not None:
             return await asyncio.open_unix_connection(
                 self.rc_unix,
                 ssl=self.setup_ssl_ctx(),
