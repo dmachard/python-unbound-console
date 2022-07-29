@@ -74,17 +74,17 @@ class RemoteControl(RemoteControlBase):
         sock = self._get_remote_control_socket()
 
         # send the command
-        sock.send(b"UBCT%s %s\n" % (UC_VERSION, cmd.encode()))
+        sock.send(f"UBCT{UC_VERSION} {cmd}\n".encode())
 
         if cmd.encode() in [ b"local_zones", b"local_zones_remove",
                              b"local_datas", b"view_local_datas",
                              b"local_datas_remove", b"view_local_datas_remove",
                              b"load_cache" ]:
             for line in data_list:
-                sock.send( b"%s\n" % line.encode() )
+                sock.send(f"{line}\n".encode())
 
             if cmd.encode() != b"load_cache":
-                sock.send( b"\x04\x0a" )
+                sock.send(b"\x04\x0a")
 
         # wait to receive all data
         buf = b''
@@ -116,10 +116,10 @@ class RemoteControl(RemoteControlBase):
         if zone_name is None:
             raise Exception("name zone not provided")
 
-        o = self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
+        o = self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
 
         for record in zone_records:
-            o = self.send_command(cmd="local_data %s" % record)
+            o = self.send_command(cmd=f"local_data {record}")
 
         return o
 
@@ -144,7 +144,7 @@ class RemoteControlAsync(RemoteControlBase):
     async def send_command(self, cmd, data_list=""):
         reader, writer = await self._get_remote_control_streams()
 
-        writer.write(b"UBCT%s %s\n" % (UC_VERSION, cmd.encode()))
+        writer.write(f"UBCT{UC_VERSION} {cmd}\n".encode())
         await writer.drain()
 
         if cmd.encode() in [ b"local_zones", b"local_zones_remove",
@@ -152,11 +152,11 @@ class RemoteControlAsync(RemoteControlBase):
                              b"local_datas_remove", b"view_local_datas_remove",
                              b"load_cache" ]:
             for line in data_list:
-                writer.write( b"%s\n" % line.encode() )
+                writer.write(f"{line}\n".encode())
                 await writer.drain()
 
             if cmd.encode() != b"load_cache":
-                writer.write( b"\x04\x0a" )
+                writer.write(b"\x04\x0a")
                 await writer.drain()
 
         lines = []
@@ -182,9 +182,9 @@ class RemoteControlAsync(RemoteControlBase):
         if zone_name is None:
             raise Exception("name zone not provided")
 
-        o = await self.send_command(cmd="local_zone %s %s" % (zone_name,zone_type))
+        o = await self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
 
         for record in zone_records:
-            o = await self.send_command(cmd="local_data %s" % record)
+            o = await self.send_command(cmd=f"local_data {record}")
 
         return o
