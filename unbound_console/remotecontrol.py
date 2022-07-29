@@ -41,21 +41,19 @@ class RemoteControlBase(metaclass=ABCMeta):
         self.rc_port = port
         self.rc_unix = unix_sock
 
-        self.s_cert = server_cert
-        self.c_key = client_key
-        self.c_cert = client_cert
-
-    def setup_ssl_ctx(self):
-        """setup the ssl context and return it"""
-        ssl_ctx = None
+        self.ssl_ctx = None
 
         # if provided, validate certificate
-        if self.s_cert and self.c_key and self.c_cert:
-            ssl_ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH,
-                                                 cafile=self.s_cert)
-            ssl_ctx.load_cert_chain(certfile=self.c_cert, keyfile=self.c_key)
-            ssl_ctx.check_hostname = False
+        if server_cert and client_cert and client_key:
+            self.ssl_ctx = self.get_ssl_ctx(server_cert, client_cert, client_key)
 
+    @staticmethod
+    def get_ssl_ctx(server_cert, client_cert, client_key):
+        """setup the ssl context and return it"""
+        ssl_ctx = ssl.create_default_context(ssl.Purpose.SERVER_AUTH,
+                                                cafile=server_cert)
+        ssl_ctx.load_cert_chain(certfile=client_cert, keyfile=client_key)
+        ssl_ctx.check_hostname = False
         return ssl_ctx
 
     @staticmethod
@@ -94,10 +92,8 @@ class RemoteControl(RemoteControlBase):
         sock.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
         sock.settimeout(1.0)
 
-        # setup ssl context ?
-        ssl_ctx = self.setup_ssl_ctx()
-        if ssl_ctx is not None:
-            sock = ssl_ctx.wrap_socket(sock, server_side=False)
+        if self.ssl_ctx is not None:
+            sock = self.ssl_ctx.wrap_socket(sock, server_side=False)
 
         # connect to the server
         sock.connect((self.rc_host, self.rc_port))
@@ -155,13 +151,13 @@ class RemoteControlAsync(RemoteControlBase):
         if self.rc_unix is not None:
             return await asyncio.open_unix_connection(
                 self.rc_unix,
-                ssl=self.setup_ssl_ctx(),
+                ssl=self.ssl_ctx,
             )
 
         return await asyncio.open_connection(
             self.rc_host,
             self.rc_port,
-            ssl=self.setup_ssl_ctx(),
+            ssl=self.ssl_ctx,
         )
 
     async def send_command(self, cmd, data_list=""):
