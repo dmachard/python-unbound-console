@@ -104,7 +104,7 @@ class RemoteControl(RemoteControlBase):
         sock = self._get_remote_control_socket()
 
         # send the command
-        sock.send(f"UBCT{UC_VERSION} {cmd}\n".encode())
+        sock.send(f"UBCT{UC_VERSION.decode()} {cmd}\n".encode())
 
         if cmd in CMDS_WITH_DATA:
             for line in data_list:
@@ -163,7 +163,7 @@ class RemoteControlAsync(RemoteControlBase):
     async def send_command(self, cmd, data_list=""):
         reader, writer = await self._get_remote_control_streams()
 
-        writer.write(f"UBCT{UC_VERSION} {cmd}\n".encode())
+        writer.write(f"UBCT{UC_VERSION.decode()} {cmd}\n".encode())
         await writer.drain()
 
         if cmd in CMDS_WITH_DATA:
