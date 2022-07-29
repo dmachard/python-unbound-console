@@ -2,6 +2,8 @@ import asyncio
 import socket
 import ssl
 from abc import ABCMeta, abstractmethod
+from dataclasses import dataclass
+from typing import List
 
 import yaml
 
@@ -14,6 +16,17 @@ CMDS_WITH_DATA = (
     "local_datas_remove", "view_local_datas_remove",
     "load_cache",
 )
+
+
+@dataclass
+class LocalZone:
+    name: str
+    type: str = "static"
+    records: List[str] = []
+
+    def __post_init__(self):
+        if not self.name:
+            raise ZoneBlankException("name zone not provided")
 
 
 class ZoneBlankException(Exception):
@@ -44,6 +57,16 @@ class RemoteControlBase(metaclass=ABCMeta):
             ssl_ctx.check_hostname = False
 
         return ssl_ctx
+
+    @staticmethod
+    def yaml_to_local_zone(yaml_data: str) -> "LocalZone":
+        yaml_data = yaml.safe_load(yaml_data)
+        zone=yaml_data.get("zone", {})
+        return LocalZone(
+            name=zone.get("name", None),
+            type=zone.get("type", "static"),
+            records=zone.get("records", []),
+        )
 
     @abstractmethod
     def send_command(self, cmd, data_list=""):
@@ -114,19 +137,11 @@ class RemoteControl(RemoteControlBase):
         return "\n".join(o)
 
     def load_zone(self, data_yaml):
-        y = yaml.safe_load(data_yaml)
+        zone = self.yaml_to_local_zone(data_yaml)
 
-        zone = y.get("zone", {})
-        zone_name = zone.get("name", None)
-        zone_type = zone.get("type", "static")
-        zone_records = zone.get("records", [])
+        o = self.send_command(cmd=f"local_zone {zone.name} {zone.type}")
 
-        if zone_name is None:
-            raise ZoneBlankException("name zone not provided")
-
-        o = self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
-
-        for record in zone_records:
+        for record in zone.records:
             o = self.send_command(cmd=f"local_data {record}")
 
         return o
@@ -177,19 +192,11 @@ class RemoteControlAsync(RemoteControlBase):
         return "\n".join(lines)
 
     async def load_zone(self, data_yaml):
-        y = yaml.safe_load(data_yaml)
+        zone = self.yaml_to_local_zone(data_yaml)
 
-        zone = y.get("zone", {})
-        zone_name = zone.get("name", None)
-        zone_type = zone.get("type", "static")
-        zone_records = zone.get("records", [])
+        o = await self.send_command(cmd=f"local_zone {zone.name} {zone.type}")
 
-        if zone_name is None:
-            raise ZoneBlankException("name zone not provided")
-
-        o = await self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
-
-        for record in zone_records:
+        for record in zone.records:
             o = await self.send_command(cmd=f"local_data {record}")
 
         return o
