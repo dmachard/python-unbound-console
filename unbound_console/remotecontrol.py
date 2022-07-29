@@ -8,6 +8,17 @@ import yaml
 UC_PORT = 8953
 UC_VERSION = b"1"
 
+CMDS_WITH_DATA = (
+    "local_zones", "local_zones_remove",
+    "local_datas", "view_local_datas",
+    "local_datas_remove", "view_local_datas_remove",
+    "load_cache",
+)
+
+
+class ZoneBlankException(Exception):
+    pass
+
 
 class RemoteControlBase(metaclass=ABCMeta):
     def __init__(self, host="127.0.0.1", port=UC_PORT, server_cert = None,
@@ -76,10 +87,7 @@ class RemoteControl(RemoteControlBase):
         # send the command
         sock.send(f"UBCT{UC_VERSION} {cmd}\n".encode())
 
-        if cmd.encode() in [ b"local_zones", b"local_zones_remove",
-                             b"local_datas", b"view_local_datas",
-                             b"local_datas_remove", b"view_local_datas_remove",
-                             b"load_cache" ]:
+        if cmd in CMDS_WITH_DATA:
             for line in data_list:
                 sock.send(f"{line}\n".encode())
 
@@ -114,7 +122,7 @@ class RemoteControl(RemoteControlBase):
         zone_records = zone.get("records", [])
 
         if zone_name is None:
-            raise Exception("name zone not provided")
+            raise ZoneBlankException("name zone not provided")
 
         o = self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
 
@@ -147,10 +155,7 @@ class RemoteControlAsync(RemoteControlBase):
         writer.write(f"UBCT{UC_VERSION} {cmd}\n".encode())
         await writer.drain()
 
-        if cmd.encode() in [ b"local_zones", b"local_zones_remove",
-                             b"local_datas", b"view_local_datas",
-                             b"local_datas_remove", b"view_local_datas_remove",
-                             b"load_cache" ]:
+        if cmd in CMDS_WITH_DATA:
             for line in data_list:
                 writer.write(f"{line}\n".encode())
                 await writer.drain()
@@ -180,7 +185,7 @@ class RemoteControlAsync(RemoteControlBase):
         zone_records = zone.get("records", [])
 
         if zone_name is None:
-            raise Exception("name zone not provided")
+            raise ZoneBlankException("name zone not provided")
 
         o = await self.send_command(cmd=f"local_zone {zone_name} {zone_type}")
 
