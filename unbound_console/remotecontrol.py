@@ -2,7 +2,7 @@ import asyncio
 import socket
 import ssl
 from abc import ABCMeta, abstractmethod
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 import yaml
@@ -22,7 +22,7 @@ CMDS_WITH_DATA = (
 class LocalZone:
     name: str
     type: str = "static"
-    records: List[str] = []
+    records: List[str] = field(default_factory=list)
 
     def __post_init__(self):
         if not self.name:
