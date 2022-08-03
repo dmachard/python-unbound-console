@@ -5,7 +5,10 @@ from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
 from typing import List, Union
 
-import yaml
+try:
+    import yaml
+except ImportError:
+    yaml = None
 
 UC_PORT = 8953
 UC_VERSION = b"1"
@@ -59,6 +62,9 @@ class RemoteControlBase(metaclass=ABCMeta):
     @staticmethod
     def yaml_to_local_zone(yaml_data: str) -> "LocalZone":
         """convert zone yaml data into a LocalZone object"""
+        if yaml is None:
+            raise ImportError("yaml requirement not installed")
+
         yaml_data = yaml.safe_load(yaml_data)
         zone=yaml_data.get("zone", {})
         return LocalZone(

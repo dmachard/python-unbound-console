@@ -4,7 +4,7 @@ import setuptools
 
 with open("README.md", "r") as fh:
     LONG_DESCRIPTION = fh.read()
-    
+
 KEYWORDS = ('unbound console control remote client')
 
 setuptools.setup(
@@ -26,7 +26,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
         "Topic :: Software Development :: Libraries",
     ],
-    install_requires=[
-        "pyyaml"
-    ]
+    extras_require={
+        "yaml": "pyyaml"
+    }
 )
