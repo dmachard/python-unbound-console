@@ -3,7 +3,7 @@ import socket
 import ssl
 from abc import ABCMeta, abstractmethod
 from dataclasses import dataclass, field
-from typing import List
+from typing import List, Union
 
 import yaml
 
@@ -58,6 +58,7 @@ class RemoteControlBase(metaclass=ABCMeta):
 
     @staticmethod
     def yaml_to_local_zone(yaml_data: str) -> "LocalZone":
+        """convert zone yaml data into a LocalZone object"""
         yaml_data = yaml.safe_load(yaml_data)
         zone=yaml_data.get("zone", {})
         return LocalZone(
@@ -66,13 +67,23 @@ class RemoteControlBase(metaclass=ABCMeta):
             records=zone.get("records", []),
         )
 
+    @staticmethod
+    def convert_to_local_zone(zone_data: Union[str, "LocalZone"]) -> "LocalZone":
+        """convert data to a LocalZone object if necessary"""
+        if isinstance(zone_data, str):
+            return RemoteControlBase.yaml_to_local_zone(zone_data)
+        elif isinstance(zone_data, LocalZone):
+            return zone_data
+        else:
+            raise TypeError("zone_data must be a yaml str or LocalZone")
+
     @abstractmethod
     def send_command(self, cmd, data_list=""):
         """send command return output"""
         pass
 
     @abstractmethod
-    def load_zone(self, data_yaml):
+    def load_zone(self, zone_data: Union[str, "LocalZone"]):
         """add local zone"""
         pass
 
@@ -132,8 +143,8 @@ class RemoteControl(RemoteControlBase):
             o.append(l.decode("utf-8"))
         return "\n".join(o)
 
-    def load_zone(self, data_yaml):
-        zone = self.yaml_to_local_zone(data_yaml)
+    def load_zone(self, zone_data):
+        zone = self.convert_to_local_zone(zone_data)
 
         o = self.send_command(cmd=f"local_zone {zone.name} {zone.type}")
 
@@ -187,8 +198,8 @@ class RemoteControlAsync(RemoteControlBase):
 
         return "\n".join(lines)
 
-    async def load_zone(self, data_yaml):
-        zone = self.yaml_to_local_zone(data_yaml)
+    async def load_zone(self, zone_data):
+        zone = self.convert_to_local_zone(zone_data)
 
         o = await self.send_command(cmd=f"local_zone {zone.name} {zone.type}")
 
