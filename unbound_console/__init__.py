@@ -1,1 +1,2 @@
-from unbound_console.remotecontrol import RemoteControl, RemoteControlAsync
+from unbound_console.remotecontrol import (LocalZone, RemoteControl,
+                                           RemoteControlAsync)
