@@ -46,8 +46,8 @@ jobs:
       run: |
         sudo docker exec unbound01 /opt/unbound/sbin/unbound-control-setup
         docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.pem /tmp/unbound_control.pem
-        sudo docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.key /tmp/unbound_control.key
-        sudo docker cp unbound01:/opt/unbound/etc/unbound/unbound_server.pem /tmp/unbound_server.pem
+        docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.key /tmp/unbound_control.key
+        docker cp unbound01:/opt/unbound/etc/unbound/unbound_server.pem /tmp/unbound_server.pem
         sudo docker stop unbound01
         sudo cp -rf $(pwd)/testsdata/unbound_tls.conf $(pwd)/testsdata/unbound.conf
         sudo docker start unbound01
@@ -60,8 +60,8 @@ jobs:
 
     - name: Deploy unbound with UNIX remote control
       run: |
-        sudo mkdir /tmp/unbound
-        sudo chown -R 1000:1000 /tmp/unbound/
+        mkdir /tmp/unbound
+        chown -R 1000:1000 /tmp/unbound/
         sudo docker run --name unbound02 --health-cmd='drill @127.0.0.1 -p 5300 github.com  || exit 1' --health-interval=2s -d --net=host -v /tmp/unbound/:/tmp/unbound/ -v $(pwd)/testsdata/unbound_unix.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
         while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound02); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
