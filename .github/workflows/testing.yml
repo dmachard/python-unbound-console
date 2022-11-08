@@ -45,7 +45,7 @@ jobs:
     - name: Restart unbound with TLS remote control 
       run: |
         sudo docker exec unbound01 /opt/unbound/sbin/unbound-control-setup
-        sudo docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.pem /tmp/unbound_control.pem
+        docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.pem /tmp/unbound_control.pem
         sudo docker cp unbound01:/opt/unbound/etc/unbound/unbound_control.key /tmp/unbound_control.key
         sudo docker cp unbound01:/opt/unbound/etc/unbound/unbound_server.pem /tmp/unbound_server.pem
         sudo docker stop unbound01
