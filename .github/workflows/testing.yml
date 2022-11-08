@@ -39,6 +39,7 @@ jobs:
 
     - name: Run Python tests for tcp
       run: |
+        sudo python3 --version
         sudo python3 -m unittest tests.test_connect
 
     - name: Restart unbound with TLS remote control 
