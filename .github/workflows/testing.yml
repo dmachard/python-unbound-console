@@ -58,13 +58,13 @@ jobs:
         python -m unittest tests.test_tls_connect
         python -m unittest tests.test_zone
 
-    - name: Deploy unbound with UNIX remote control
-      run: |
-        sudo mkdir /tmp/unbound
-        sudo chown -R 1000:1000 /tmp/unbound/
-        sudo docker run --name unbound02 --health-cmd='drill @127.0.0.1 -p 5300 github.com  || exit 1' --health-interval=2s -d --net=host -v /tmp/unbound/:/tmp/unbound/ -v $(pwd)/testsdata/unbound_unix.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
-        while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound02); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
+    #- name: Deploy unbound with UNIX remote control
+    #  run: |
+    #    sudo mkdir /tmp/unbound
+    #    sudo chown -R 1000:1000 /tmp/unbound/
+    #    sudo docker run --name unbound02 --health-cmd='drill @127.0.0.1 -p 5300 github.com  || exit 1' --health-interval=2s -d --net=host -v /tmp/unbound/:/tmp/unbound/ -v $(pwd)/testsdata/unbound_unix.conf:/opt/unbound/etc/unbound/unbound.conf:ro mvance/unbound:${{ matrix.unbound }}
+    #    while true; do status=$(sudo docker inspect --format='{{.State.Health.Status}}' unbound02); if [ $status == "healthy" ]; then break; else sleep 1; fi; done
 
-    - name: Run Python tests for unix socket
-      run: |
-        python -m unittest tests.test_unix_connect
+    #- name: Run Python tests for unix socket
+    #  run: |
+    #    python -m unittest tests.test_unix_connect
