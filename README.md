@@ -1,8 +1,8 @@
 # Python console for unbound server
 
-![Build](https://github.com/dmachard/python-unbound-console/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/python-unbound-console/workflows/Testing/badge.svg) ![Pypi](https://github.com/dmachard/python-unbound-console/workflows/PyPI/badge.svg)
+![Build](https://github.com/dmachard/python-unbound-console/workflows/Build/badge.svg) ![Testing](https://github.com/dmachard/python-unbound-console/workflows/Testing/badge.svg) ![Pypi](https://github.com/dmachard/python-unbound-console/workflows/Publish/badge.svg)
 
-![unbound 1.18.x](https://img.shields.io/badge/unbound%201.18.x-tested-green) ![unbound 1.17.x](https://img.shields.io/badge/unbound%201.17.x-tested-green) ![unbound 1.16.x](https://img.shields.io/badge/unbound%201.16.x-tested-green) ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
+![unbound 1.17.x](https://img.shields.io/badge/unbound%201.17.x-tested-green) ![unbound 1.16.x](https://img.shields.io/badge/unbound%201.16.x-tested-green) ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
 
 ![python 3.8.x](https://img.shields.io/badge/python%203.8.x-tested-blue) ![python 3.9.x](https://img.shields.io/badge/python%203.9.x-tested-blue) ![python 3.10.x](https://img.shields.io/badge/python%203.10.x-tested-blue) ![python 3.11.x](https://img.shields.io/badge/python%203.11.x-tested-blue)
 
