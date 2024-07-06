@@ -30,7 +30,7 @@ pip install unbound_console
 
 ## Remote Control on Unbound
 
-![unbound 1.19.x](https://img.shields.io/badge/unbound%201.19.x-tested-green)  ![unbound 1.18.x](https://img.shields.io/badge/unbound%201.18.x-tested-green) ![unbound 1.17.x](https://img.shields.io/badge/unbound%201.17.x-tested-green) ![unbound 1.16.x](https://img.shields.io/badge/unbound%201.16.x-tested-green) ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
+![unbound 1.20.x](https://img.shields.io/badge/unbound%201.20.x-tested-green) ![unbound 1.19.x](https://img.shields.io/badge/unbound%201.19.x-tested-green)  ![unbound 1.18.x](https://img.shields.io/badge/unbound%201.18.x-tested-green) ![unbound 1.17.x](https://img.shields.io/badge/unbound%201.17.x-tested-green) ![unbound 1.16.x](https://img.shields.io/badge/unbound%201.16.x-tested-green) ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
 
 Before to use this utility. You must activate the remote control on your unbound server.
 See [config file](https://github.com/dmachard/python-unbound-console/blob/master/testsdata/unbound_tls.conf) example.
