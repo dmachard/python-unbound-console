@@ -12,8 +12,7 @@
 
 ## Installation
 
-![python 3.12.x](https://img.shields.io/badge/python%203.12.x-tested-blue) ![python 3.11.x](https://img.shields.io/badge/python%203.11.x-tested-blue) ![python 3.10.x](https://img.shields.io/badge/python%203.10.x-tested-blue) ![python 3.9.x](https://img.shields.io/badge/python%203.9.x-tested-blue) ![python 3.8.x](https://img.shields.io/badge/python%203.8.x-tested-blue)
-
+![python 3.13.x](https://img.shields.io/badge/python%203.13.x-tested-blue) ![python 3.11.x](https://img.shields.io/badge/python%203.11.x-tested-blue) ![python 3.10.x](https://img.shields.io/badge/python%203.10.x-tested-blue)
 This module can be installed from [pypi](https://pypi.org/project/unbound_console/) website.
 
 This command will install the module with yaml support for loading zone data.
@@ -30,7 +29,7 @@ pip install unbound_console
 
 ## Remote Control on Unbound
 
-![unbound 1.20.x](https://img.shields.io/badge/unbound%201.20.x-tested-green) ![unbound 1.19.x](https://img.shields.io/badge/unbound%201.19.x-tested-green)  ![unbound 1.18.x](https://img.shields.io/badge/unbound%201.18.x-tested-green) ![unbound 1.17.x](https://img.shields.io/badge/unbound%201.17.x-tested-green) ![unbound 1.16.x](https://img.shields.io/badge/unbound%201.16.x-tested-green) ![unbound 1.15.x](https://img.shields.io/badge/unbound%201.15.x-tested-green) ![unbound 1.14.x](https://img.shields.io/badge/unbound%201.14.x-tested-green)  ![unbound 1.13.x](https://img.shields.io/badge/unbound%201.13.x-tested-green) ![unbound 1.12.x](https://img.shields.io/badge/unbound%201.12.x-tested-green)
+![unbound 1.22.x](https://img.shields.io/badge/unbound%201.22.x-tested-green) ![unbound 1.21.x](https://img.shields.io/badge/unbound%201.21.x-tested-green) ![unbound 1.20.x](https://img.shields.io/badge/unbound%201.20.x-tested-green) ![unbound 1.19.x](https://img.shields.io/badge/unbound%201.19.x-tested-green)  ![unbound 1.18.x](https://img.shields.io/badge/unbound%201.18.x-tested-green)
 
 Before to use this utility. You must activate the remote control on your unbound server.
 See [config file](https://github.com/dmachard/python-unbound-console/blob/master/testsdata/unbound_tls.conf) example.
