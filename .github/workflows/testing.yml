@@ -10,12 +10,12 @@ on:
 
 jobs:
   unbound-e2e:
-    runs-on: ubuntu-22.04
+    runs-on: ubuntu-24.04
 
     strategy:
       matrix:
         unbound: [ '1.19.0', '1.20.0', '1.21.0', '1.22.0' ] 
-        python: [ '3.10', '3.11', '3.12', '3.13'  ]
+        python: [ '3.10', '3.11', '3.12', '3.13', '3.14' ]
 
     steps:
     - uses: actions/checkout@v5
